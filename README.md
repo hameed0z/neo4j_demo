@@ -9,7 +9,9 @@ This demo was originaly insbired from the example given from neo4j
 
 ## How to run
 
-Type the following command:
+Type the following commands:
+
+```:~$ npm install```
 
 ```:~$ npm start```
 
