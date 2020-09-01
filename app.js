@@ -44,29 +44,28 @@ const data = [
     ["Bob", "Sally"]
 ];
 
-function query(query, params, column, cb) {
-   
-    return new Promise((resolve,reject)=>{
-        function callback(results) {
-            if (!column) cb(results)
-            else results.records.forEach(function (row) { cb(row.get(column)) });
-            resolve()
-        };
-        session.run(query, params)
-            .then(callback)
-            .catch(reject)
-    })  
+const query = async (query, params, column, cb) => {
+    const results = await session.run(query, params)
+    if (!column) cb(results)
+    else results.records.forEach(function (row) { cb(row.get(column)) });  
 }
 
 query(insertQuery, { pairs: data }, null, async function () {
     try {
         // friends of friends query
+        // friends of Joe's friends that don't know joe -> Anna
         await query(foafQuery, { name: "Joe" }, "name", console.log);
+
         // common friends query
+        // common friends between joe and sally -> Bob
         await query(commonFriendsQuery, { name1: "Joe", name2: "Sally" }, "friend", console.log);
-        //  
+
+        // getting he shortest path from joe to billy
         await query(connectingPathsQuery, { name1: "Joe", name2: "Billy" }, "names", (res) => console.log(res));
+        // closing the session
         await session.close()
+        // closing the driver
+        await driver.close()
     } catch (error) {
         console.log('error: ', error);
     }
