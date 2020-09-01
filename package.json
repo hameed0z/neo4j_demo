@@ -1,0 +1,33 @@
+{
+  "name": "neo4j_demo",
+  "version": "1.0.0",
+  "description": "neo4j tutorial",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "neo4j": "^2.0.0-RC2",
+    "neo4j-driver": "^4.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/7ameed/neo4j_demo.git"
+  },
+  "keywords": [
+    "neo4j",
+    "node",
+    "graph",
+    "database"
+  ],
+  "author": "hameed muhammad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/7ameed/neo4j_demo/issues"
+  },
+  "homepage": "https://github.com/7ameed/neo4j_demo#readme"
+}
