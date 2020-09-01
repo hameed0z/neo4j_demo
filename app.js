@@ -1,4 +1,3 @@
-// npm install --save neo4j
 const neo4j = require('neo4j-driver');
 
 const driver = neo4j.driver(
@@ -44,24 +43,24 @@ const data = [
     ["Bob", "Sally"]
 ];
 
-const query = async (query, params, column, cb) => {
+const query = async (query, params, column, cb=console.log) => {
     const results = await session.run(query, params)
     if (!column) cb(results)
     else results.records.forEach(function (row) { cb(row.get(column)) });  
 }
 
-query(insertQuery, { pairs: data }, null, async function () {
+query(insertQuery, { pairs: data }, null, async () => {
     try {
         // friends of friends query
         // friends of Joe's friends that don't know joe -> Anna
-        await query(foafQuery, { name: "Joe" }, "name", console.log);
+        await query(foafQuery, { name: "Joe" }, "name");
 
         // common friends query
         // common friends between joe and sally -> Bob
-        await query(commonFriendsQuery, { name1: "Joe", name2: "Sally" }, "friend", console.log);
+        await query(commonFriendsQuery, { name1: "Joe", name2: "Sally" }, "friend");
 
         // getting he shortest path from joe to billy
-        await query(connectingPathsQuery, { name1: "Joe", name2: "Billy" }, "names", (res) => console.log(res));
+        await query(connectingPathsQuery, { name1: "Joe", name2: "Billy" }, "names");
         // closing the session
         await session.close()
         // closing the driver
